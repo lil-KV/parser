@@ -4,6 +4,7 @@ from pars_model import Flat
 import re
 from datetime import datetime
 import db_client
+import psycopg2
 
 PARSER_NAME = 'gohome.by'  # reference
 
@@ -20,19 +21,24 @@ def get_all_flats_links(page_from=0, page_to=1):
 
 def turn_links_to_flats(links):
     flats = []
-    for link in links:
+    for counter, link in enumerate(links):
         resp = requests.get(link)
         html = BeautifulSoup(resp.content, 'html.parser')
         title = html.find('h1').text.strip()
+        try:
+            price = re.sub('[^0-9]', '', html.find(class_='price big').text.strip())
+        except:
+            print('договорная')
 
-        raw_price = html.find('span', class_='price big')
-        if raw_price is not None:
-            price = re.sub('[^0-9]', '', raw_price.text.strip()) # что не цифра, становится пробелом
-        else:
-            price = 000
+
+        # raw_price = html.find(class_='price big')
+        # if raw_price is not None:
+        #     price = re.sub('[^0-9]', '', raw_price.text.strip()) # что не цифра, становится пробелом
+        # else:
+        #     price = 000
         description = html.find('p').text.strip()
         date = datetime.strptime(html.find_all(class_='description')[5].text.strip(), '%d.%m.%Y')
-        number = re.sub('[^0-9]', '', html.find('a', class_='phone__link').text.strip())
+        number = html.find('a', class_='phone__link').text.strip()
 
         flats.append(Flat(
             link=link,
@@ -44,6 +50,7 @@ def turn_links_to_flats(links):
             reference=PARSER_NAME
 
         ))
+        print(f'спаршено {counter} из {len(links)}')
     return flats
 
 
