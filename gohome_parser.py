@@ -5,6 +5,8 @@ import re
 from datetime import datetime
 import db_client
 import psycopg2
+import time
+from tqdm import tqdm
 
 
 PARSER_NAME = 'gohome.by'  # reference
@@ -61,8 +63,8 @@ def turn_links_to_flats(links):
                         ))
         except psycopg2.errors.StringDataRightTruncation:
             pass
-
-        print(f'спаршено {counter} из {len(links)}')
+        for item in tqdm(flats):
+            time.sleep(0.01)
     return flats
 
 
