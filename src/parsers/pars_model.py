@@ -4,7 +4,7 @@ from src import db_client
 
 class Flat:
     def __init__(self, link=None, reference=None, title=None, price=None, description=None, date=None, number=None,
-                 square=None, city=None, street_house=None, district=None, year=None, rooms=None):
+                 square=None, city=None, street_house=None, district=None, year=None, rooms=None, photos=[]):
         self.link = link
         self.reference = reference
         self.title = title
@@ -18,6 +18,7 @@ class Flat:
         self.district = district
         self.year = year
         self.rooms = rooms
+        self.photos = photos
 
 
 class ParserFather(ABC):

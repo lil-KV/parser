@@ -3,6 +3,7 @@ import time
 import threading
 from constants import USED_PARSERS
 
+PARSE_EVERY_MINUTES = 5
 
 def parse_all():
     for parser in USED_PARSERS:
@@ -11,7 +12,7 @@ def parse_all():
 
 
 # планировщик
-schedule.every(3).seconds.do(parse_all)
+schedule.every(PARSE_EVERY_MINUTES).seconds.do(parse_all)
 
 # нужно иметь свой цикл для запуска планировщика с периодом в 1 сек:
 while True:

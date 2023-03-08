@@ -34,8 +34,8 @@ def insert_flat(flat):
         with conn.cursor() as cur:
             cur.execute('''
             INSERT INTO flats 
-            (link, reference, price, title, description, date, number, square, city, street_house, district, year, rooms) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (link, reference, price, title, description, date, number, square, city, street_house, district, year, rooms, photos) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ON CONFLICT (link) DO
             UPDATE SET
             link = EXCLUDED.link,
@@ -50,11 +50,12 @@ def insert_flat(flat):
             street_house = EXCLUDED.street_house,
             district = EXCLUDED.district,
             year = EXCLUDED.year,
-            rooms = EXCLUDED.rooms
+            rooms = EXCLUDED.rooms,
+            photos = EXCLUDED.photos
             ''',
                         (flat.link, flat.reference, flat.price, flat.title, flat.description, flat.date, flat.number,
-                         flat.square, flat.city, flat.street_house, flat.district, flat.year, flat.rooms
+                         flat.square, flat.city, flat.street_house, flat.district, flat.year, flat.rooms, flat.photos
                          )
                         )
 
-create_flats_table()
+# create_flats_table()
