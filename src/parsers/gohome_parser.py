@@ -77,4 +77,4 @@ class ParserGohomeBy(ParserFather):
         return flats
 
 
-ParserGohomeBy().update_with_last_flats()
+# ParserGohomeBy().update_with_last_flats()
