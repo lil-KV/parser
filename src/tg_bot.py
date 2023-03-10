@@ -1,6 +1,6 @@
 BOT_NAME = 'flat_seekerBot'
 
-TOKEN = '6203659089:AAHxRiQ8dKA8fOUf5enFI4fxOMIyeqH-U2s'
+TOKEN = ''
 
 import telebot
 from telebot import types
