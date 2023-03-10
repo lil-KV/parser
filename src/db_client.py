@@ -1,10 +1,6 @@
-# одинаковый для всех ссылок
 import psycopg2
+from src.config import DBNAME, USER, PASSWORD, HOST
 
-DBNAME = 'postgres'
-USER = 'postgres'
-PASSWORD = 'lk1118740'
-HOST = '127.0.0.1'
 
 FLATS_TABLE = 'flats'
 
@@ -25,8 +21,6 @@ def create_flats_table():
             cur.execute('''
             ALTER TABLE flats ALTER COLUMN square TYPE CHARACTER VARYING(1000)
         ''')
-
-
 
 
 def insert_flat(flat):
@@ -58,4 +52,23 @@ def insert_flat(flat):
                          )
                         )
 
-# create_flats_table()
+
+def get_not_posted_flats():
+    with psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, host=HOST) as conn:
+        with conn.cursor() as cur:
+            cur.execute('''SELECT link, price, number, city FROM flats
+            WHERE is_tg_posted = false
+          
+            ''')
+
+            return cur.fetchall()
+
+
+def update_not_posted_flats():
+    with psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, host=HOST) as conn:
+        with conn.cursor() as cur:
+            cur.execute('''UPDATE flats SET
+            is_tg_posted = true
+          
+            '''
+                        )

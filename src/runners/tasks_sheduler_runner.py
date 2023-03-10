@@ -12,7 +12,7 @@ def parse_all():
 
 
 # планировщик
-schedule.every(PARSE_EVERY_MINUTES).seconds.do(parse_all)
+schedule.every(PARSE_EVERY_MINUTES).minutes.do(parse_all)
 
 # нужно иметь свой цикл для запуска планировщика с периодом в 1 сек:
 while True:
